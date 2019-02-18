@@ -1,0 +1,5 @@
+#!/bin/bash
+
+docker build -t chaeyk/s1 .
+docker push chaeyk/s1
+

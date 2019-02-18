@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker build -t chaeyk/s1 .
+docker run -it --rm -p8080:8080 chaeyk/s1

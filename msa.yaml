@@ -1,0 +1,181 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msa-s1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s1
+  template:
+    metadata:
+      name: s1-pod
+      labels:
+        app: s1
+        version: v1
+        project: msa
+    spec:
+      containers:
+      - name: s1
+        image: chaeyk/s1:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msa-s2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: s2
+  template:
+    metadata:
+      name: s2-pod
+      labels:
+        app: s2
+        version: v1
+        project: msa
+    spec:
+      containers:
+      - name: s2
+        image: chaeyk/s2:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msa-s2v2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: s2
+  template:
+    metadata:
+      name: s2v2-pod
+      labels:
+        app: s2
+        version: v2
+        project: msa
+    spec:
+      containers:
+      - name: s2
+        image: chaeyk/s2:v2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msa-s3
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: s3
+  template:
+    metadata:
+      name: s3-pod
+      labels:
+        app: s3
+        version: v1
+        project: msa
+    spec:
+      containers:
+      - name: s3
+        image: chaeyk/s3:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msa-s4
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: s4
+  template:
+    metadata:
+      name: s4-pod
+      labels:
+        app: s4
+        version: v1
+        project: msa
+    spec:
+      containers:
+      - name: s4
+        image: chaeyk/s4:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s1
+spec:
+  selector:
+    app: s1
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s2
+spec:
+  selector:
+    app: s2
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s3
+spec:
+  selector:
+    app: s3
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s4
+spec:
+  selector:
+    app: s4
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+
